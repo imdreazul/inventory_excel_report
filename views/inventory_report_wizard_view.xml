@@ -1,0 +1,101 @@
+<odoo>
+    <!--  ─── Wizard Form View ───────────────────────────────────────────────  -->
+    <record id="view_inventory_report_wizard_form" model="ir.ui.view">
+        <field name="name">inventory.report.wizard.form</field>
+        <field name="model">inventory.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Excel Report">
+                <sheet>
+                    <!--  Header Banner  -->
+                    <!--                     <div class="oe_title mb-3"> -->
+                    <!--                         <h2> -->
+                    <!--                             <span>Inventory Excel Report</span> -->
+                    <!--                         </h2> -->
+                    <!--                         <p class="text-muted"> -->
+                    <!--                             Generate a dynamic Excel report with opening stock, -->
+                    <!--                             stock-in / stock-out movements, and closing stock. -->
+                    <!--                         </p> -->
+                    <!--                     </div> -->
+                    <!--                     <group string="Report Filters" col="4"> -->
+                    <!--                         <group string="Date Range" col="2"> -->
+                    <!--                             <field name="date_from" -->
+                    <!--                                    required="['date_from', '=', False]" -->
+                    <!--                             /> -->
+                    <!--                             <field name="date_to" -->
+                    <!--                                    required="['date_to', '=', False]" -->
+                    <!--                             /> -->
+                    <!--                         </group> -->
+                    <!--                         <group string="Location &amp; Company" col="2"> -->
+                    <!--                             <field name="location_id" -->
+                    <!--                                    options="{'no_create': True}" -->
+                    <!--                             /> -->
+                    <!--                             <field name="company_id" -->
+                    <!--                                    options="{'no_create': True}" -->
+                    <!--                                    readonly="1" -->
+                    <!--                             /> -->
+                    <!--                         </group> -->
+                    <!--                     </group> -->
+                    <!--                     <group string="Optional Filters" col="2"> -->
+                    <!--                         <field name="product_category_ids" -->
+                    <!--                                widget="many2many_tags" -->
+                    <!--                                placeholder="All categories..." -->
+                    <!--                                options="{'no_create': True}" -->
+                    <!--                         /> -->
+                    <!--                         <field name="product_ids" -->
+                    <!--                                widget="many2many_tags" -->
+                    <!--                                placeholder="All products..." -->
+                    <!--                                options="{'no_create': True}" -->
+                    <!--                                domain="[('type', 'in', ['product', 'consu'])]" -->
+                    <!--                         /> -->
+                    <!--                     </group> -->
+                    <group>
+                    <group>
+                        <field name="date_from" required="['date_from', '=', False]"/>
+                        <field name="date_to" required="['date_to', '=', False]"/>
+                        <field name="location_id" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="company_id" options="{'no_create': True}" readonly="1"/>
+                        <field name="product_category_ids" widget="many2many_tags" placeholder="All categories..." options="{'no_create': True}"/>
+                        <field name="product_ids" widget="many2many_tags" placeholder="All products..." options="{'no_create': True}" domain="[('type', 'in', ['product', 'consu'])]"/>
+                    </group>
+                    </group>
+                    <!--  Info box  -->
+                    <!--                     <div class="alert alert-info" role="alert" style="margin-top:8px;"> -->
+                    <!--                         <strong>Report Columns:</strong> -->
+                    <!--                         SL No · Product Code · Product Name (with variant) · -->
+                    <!--                         Product Category · Opening Stock (before Date From) · -->
+                    <!--                         <em>Dynamic Stock-In columns per source location</em> · -->
+                    <!--                         Total In · <em>Dynamic Stock-Out columns per destination location</em> · -->
+                    <!--                         Total Out · Cost Price · Sales Price · Closing Stock -->
+                    <!--                     </div> -->
+                </sheet>
+                <footer>
+                    <button name="action_generate_report" string="Generate Excel Report" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--  ─── Window Action ───────────────────────────────────────────────────  -->
+    <record id="action_inventory_report_wizard" model="ir.actions.act_window">
+        <field name="name">Inventory Excel Report</field>
+        <field name="res_model">inventory.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_inventory_report_wizard_form"/>
+        <field name="target">new</field>
+        <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face"> Generate your Inventory Excel Report </p>
+        </field>
+    </record>
+    <!--  ─── Menu Items ─────────────────────────────────────────────────────  -->
+    <!--  Sub-menu under Inventory > Reporting  -->
+    <!--     <menuitem -->
+    <!--         id="menu_inventory_excel_report" -->
+    <!--         name="Inventory Excel Report" -->
+    <!--         parent="stock.menu_stock_reporting" -->
+    <!--         action="action_inventory_report_wizard" -->
+    <!--         sequence="25" -->
+    <!--     /> -->
+    <menuitem id="menu_inventory_excel_report" name="Inventory Report" parent="stock.menu_warehouse_report" action="action_inventory_report_wizard" sequence="100"/>
+</odoo>
